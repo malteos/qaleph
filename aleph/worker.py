@@ -6,8 +6,17 @@ from servicelayer.extensions import get_entry_point
 from aleph.core import kv, db, create_app
 from aleph.model import Collection
 from aleph.queues import get_rate_limit
-from aleph.queues import OP_INDEX, OP_REINDEX, OP_REINGEST, OP_XREF
-from aleph.queues import OP_XREF_ITEM, OP_LOAD_MAPPING, OP_FLUSH_MAPPING
+from aleph.queues import (
+    OP_INDEX,
+    OP_REINDEX,
+    OP_REINGEST,
+    OP_XREF,
+    OP_EXPORT_SEARCH_RESULTS,
+    OP_XREF_ITEM,
+    OP_LOAD_MAPPING,
+    OP_FLUSH_MAPPING,
+)
+from aleph.queues import ROLE_PREFIX
 from aleph.logic.alerts import check_alerts
 from aleph.logic.collections import compute_collections, refresh_collection
 from aleph.logic.notifications import generate_digest
@@ -26,6 +35,7 @@ OPERATIONS = (
     OP_XREF_ITEM,
     OP_LOAD_MAPPING,
     OP_FLUSH_MAPPING,
+    OP_EXPORT_SEARCH_RESULTS,
 )
 
 
@@ -72,10 +82,13 @@ class AlephWorker(Worker):
 
     def handle(self, task):
         with app.app_context():
-            collection = Collection.by_foreign_id(task.job.dataset.name)
-            if collection is None:
-                log.error("Collection not found: %s", task.job.dataset)
-                return
+            if task.job.dataset.name.startswith(ROLE_PREFIX):
+                collection = None
+            else:
+                collection = Collection.by_foreign_id(task.job.dataset.name)
+                if collection is None:
+                    log.error("Collection not found: %s", task.job.dataset)
+                    return
             self.dispatch_task(collection, task)
 
     def cleanup_job(self, job):
