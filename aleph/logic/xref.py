@@ -64,10 +64,6 @@ def xref_item(stage, collection, entity_id=None, batch=50):
     stage.mark_done(len(entity_ids) - 1)
 
 
-def op_xref_item_handler(collection, task):
-    xref_item(task.stage, collection, **task.payload)
-
-
 def xref_collection(stage, collection):
     """Cross-reference all the entities and documents in a collection."""
     index.delete_xref(collection, sync=True)
@@ -80,10 +76,6 @@ def xref_collection(stage, collection):
             job_id=stage.job.id,
             payload={"entity_id": entity.get("id")},
         )
-
-
-def op_xref_handler(collection, task):
-    xref_collection(task.stage, collection)
 
 
 def _format_date(proxy):
