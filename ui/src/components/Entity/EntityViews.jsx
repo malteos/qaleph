@@ -18,6 +18,7 @@ import EntitySimilarMode from 'components/Entity/EntitySimilarMode';
 import EntityInfoMode from 'components/Entity/EntityInfoMode';
 import EntityMappingMode from 'components/Entity/EntityMappingMode';
 import DocumentViewMode from 'components/Document/DocumentViewMode';
+import EntityAnnotationsViewMode from "qaleph/components/Entity/EntityAnnotationsViewMode";
 
 
 class EntityViews extends React.Component {
@@ -181,6 +182,16 @@ class EntityViews extends React.Component {
             panel={<EntityMappingMode document={entity} />}
           />
         )}
+        <Tab
+            id="annotation"
+            title={(
+                <>
+                  <Icon icon="highlight" className="left-icon" />
+                  Annotations
+                </>
+            )}
+            panel={<EntityAnnotationsViewMode entity={entity} />}
+        />
       </Tabs>
     );
   }

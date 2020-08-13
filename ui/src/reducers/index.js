@@ -21,6 +21,8 @@ import roles from './roles';
 import notifications from './notifications';
 import systemStatus from './systemStatus';
 import queryLogs from './queryLogs';
+import corpusAnalysis from 'qaleph/reducers/corpusAnalysis';
+import entityAnnotations from 'qaleph/reducers/entityAnnotations';
 
 
 const rootReducer = combineReducers({
@@ -45,6 +47,8 @@ const rootReducer = combineReducers({
   queryLogs,
   results,
   systemStatus,
+  corpusAnalysis,
+  entityAnnotations,
 });
 
 export default rootReducer;

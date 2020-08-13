@@ -25,6 +25,7 @@ import CollectionScreen from 'screens/CollectionScreen/CollectionScreen';
 import DiagramIndexScreen from 'screens/DiagramIndexScreen/DiagramIndexScreen';
 import DiagramScreen from 'screens/DiagramScreen/DiagramScreen';
 import EntityScreen from 'screens/EntityScreen/EntityScreen';
+import CorpusAnalysisScreen from 'qaleph/screens/CorpusAnalysisScreen/CorpusAnalysisScreen';
 
 import './Router.scss';
 
@@ -86,6 +87,7 @@ class Router extends Component {
           <Route path="/settings" exact component={SettingsScreen} />
           <Route path="/status" exact component={SystemStatusScreen} />
           <Route path="/groups/:groupId" exact component={GroupScreen} />
+          <Route path="/corpus_analysis" exact component={CorpusAnalysisScreen} />
           <Route path="/" exact component={HomeScreen} />
           <Route component={NotFoundScreen} />
         </Switch>

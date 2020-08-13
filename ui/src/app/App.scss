@@ -20,9 +20,12 @@ $icon-font-path: "~@blueprintjs/icons/resources/icons";
 @import "~@blueprintjs/icons/src/blueprint-icons.scss";
 @import "~@blueprintjs/select/src/blueprint-select.scss";
 @import "./variables.scss";
+
+
 @import "./tables.scss";
 @import "./layouts.scss";
 @import "./blueprint-overrides.scss";
+
 @import "app/mixins.scss";
 
 html {

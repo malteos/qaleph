@@ -1,7 +1,7 @@
 # Dependencies maintained by OCCRP
 banal==1.0.1
 urlnormalizer==1.2.5
-followthemoney==2.0.1
+https://github.com/malteos/followthemoney/archive/qurator.zip#egg=followthemoney
 followthemoney-store[postgresql]==2.2.1
 fingerprints==1.0.1
 servicelayer[google,amazon]==1.13.5
@@ -49,3 +49,6 @@ coveralls
 # Tracing and logging libraries
 python-json-logger==0.1.11
 google-cloud-logging==1.15.0
+
+# Custom dependencies
+spacy==2.3.2

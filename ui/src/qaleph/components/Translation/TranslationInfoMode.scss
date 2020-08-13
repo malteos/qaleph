@@ -1,0 +1,21 @@
+@import "src/app/variables.scss";
+
+.TranslationInfoMode {
+  .collection-info.bp3-card {
+    border: 1px solid $aleph-border-color;
+    box-shadow: none;
+  }
+
+  .collection-info__item {
+    display: block;
+    padding: 5px 0;
+  }
+
+  .bp3-spinner-head {
+    stroke: $blue1 !important;
+  }
+
+  .CollectionLabel {
+    vertical-align: middle;
+  }
+}

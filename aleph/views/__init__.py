@@ -17,6 +17,8 @@ from aleph.views.archive_api import blueprint as archive_api
 from aleph.views.status_api import blueprint as status_api
 from aleph.views.mappings_api import blueprint as mappings_api
 from aleph.views.entitysets_api import blueprint as entitysets_api
+from aleph.qaleph.views.corpus_analysis_api import blueprint as corpus_analysis_api
+from aleph.qaleph.views.entity_annotations_api import blueprint as entity_annotations_api
 
 
 def mount_app_blueprints(app):
@@ -39,3 +41,6 @@ def mount_app_blueprints(app):
     app.register_blueprint(status_api)
     app.register_blueprint(mappings_api)
     app.register_blueprint(entitysets_api)
+    # Custom endpoints
+    app.register_blueprint(corpus_analysis_api)
+    app.register_blueprint(entity_annotations_api)

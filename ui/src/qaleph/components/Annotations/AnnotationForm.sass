@@ -1,0 +1,138 @@
+@import "~@blueprintjs/core/lib/scss/variables"
+
+// Tag colors
+$tag-1-color: #FFADAD
+$tag-2-color: #FFD6A5
+$tag-3-color: #FDFFB6
+$tag-4-color: #CAFFBF
+$tag-5-color: #9BF6FF
+$tag-6-color: #A0C4FF
+$tag-7-color: #BDB2FF
+$tag-8-color: #FFC6FF
+$tag-9-color: #d9d9d9
+$tag-10-color: #e4b899
+
+$tag-selected-modifier: 0%
+
+.tag-colored
+
+  &.tag-1
+    background: $tag-1-color !important
+    &.bp3-active,
+    &.annotation-selected
+      //background: lighten($tag-1-color, $tag-selected-modifier) !important
+      background: $tag-1-color !important
+
+  &.tag-2
+    background: $tag-2-color !important
+    &.bp3-active,
+    &.annotation-selected
+      background: lighten($tag-2-color, $tag-selected-modifier) !important
+
+  &.tag-3
+    background: $tag-3-color !important
+    &.bp3-active,
+    &.annotation-selected
+      background: lighten($tag-3-color, $tag-selected-modifier) !important
+
+  &.tag-4
+    background: $tag-4-color !important
+    &.bp3-active,
+    &.annotation-selected
+      background: lighten($tag-4-color, $tag-selected-modifier) !important
+
+  &.tag-5
+    background: $tag-5-color !important
+    &.bp3-active,
+    &.annotation-selected
+      background: lighten($tag-5-color, $tag-selected-modifier) !important
+
+  &.tag-6
+    background: $tag-6-color !important
+    &.bp3-active,
+    &.annotation-selected
+      background: lighten($tag-6-color, $tag-selected-modifier) !important
+
+  &.tag-7
+    background: $tag-7-color !important
+    &.bp3-active,
+    &.annotation-selected
+      background: lighten($tag-7-color, $tag-selected-modifier) !important
+
+  &.tag-8
+    background: $tag-8-color !important
+    &.bp3-active,
+    &.annotation-selected
+      background: lighten($tag-8-color, $tag-selected-modifier) !important
+
+  &.tag-9
+    background: $tag-9-color !important
+    &.bp3-active,
+    &.annotation-selected
+      background: lighten($tag-9-color, $tag-selected-modifier) !important
+
+  &.tag-10
+    background: $tag-10-color !important
+    &.bp3-active,
+    &.annotation-selected
+      background: lighten($tag-10-color, $tag-selected-modifier) !important
+
+
+.annotation-selected
+  border: 2px dotted #000 !important
+  opacity: 1.0
+
+.annotation-mark
+  cursor: pointer
+  margin: 1px
+  padding: 2.5px 5px
+  font-weight: bold
+  color: $black
+  background: #ffe184
+  opacity: 0.85
+
+  .tag
+    margin-left: 6px
+    text-transform: uppercase
+    vertical-align: middle
+    font-size: 8px
+    font-weight: bold
+
+  .remove
+    top: -8px
+    left: -8px
+    width: 16px
+    height: 16px
+    color: $white
+    background: $dark-gray5
+    opacity: 0
+    position: absolute
+    transition: opacity 0.1s ease
+    border-radius: 50%
+
+    &:hover
+      background: #777
+
+
+  &:hover
+    .remove
+      opacity: 100
+
+.annotation-header
+  margin-bottom: 16px
+
+  .label
+    font-size: 11px
+    text-transform: uppercase
+    margin-right: 10px
+
+  button
+    > span > span
+      margin-left: 8px
+
+  .tag
+    padding-right: 5px
+    margin-right: 5px
+    margin-bottom: 5px
+    &.bp3-active
+      box-shadow: inset 0 0 0 1px rgba(16, 22, 26, 0.2), inset 0 1px 2px rgba(16, 22, 26, 0.7)

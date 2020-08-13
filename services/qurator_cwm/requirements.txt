@@ -1,0 +1,4 @@
+https://github.com/malteos/followthemoney/archive/qurator.zip#egg=followthemoney
+followthemoney-store[postgresql]==2.2.1
+servicelayer==1.13.5
+requests==2.24.0
