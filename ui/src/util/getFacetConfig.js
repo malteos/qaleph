@@ -47,6 +47,15 @@ const messages = defineMessages({
     id: 'facet.category',
     defaultMessage: '{count, plural, one {Category} other {Categories}}',
   },
+  // custom facets
+  facet_topics: {
+    id: 'facet.topics',
+    defaultMessage: '{count, plural, one {Topic} other {Topics}}',
+  },
+  facet_user_status: {
+    id: 'facet.user_status',
+    defaultMessage: 'Annotation progress',
+  }
 });
 
 const propConfigs = {
@@ -113,6 +122,17 @@ const propConfigs = {
     label: messages.facet_schema,
     icon: 'list-columns',
     defaultSize: 1000,
+  },
+  // custom facets
+  'properties.annotatedTopics': {
+    field: 'properties.annotatedTopics',
+    label: messages.facet_topics,
+    icon: 'tag',
+  },
+  'properties.annotatedUserStatus': {
+    field: 'properties.annotatedUserStatus',
+    label: messages.facet_user_status,
+    icon: 'highlight',
   },
 };
 

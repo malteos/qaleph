@@ -16,7 +16,7 @@ services:
   elasticsearch:
     build:
       context: ../services/elasticsearch
-    image: ${DOCKER_USER:-alephdata}/aleph-elasticsearch:${ALEPH_TAG:-latest}
+    image: malteos/aleph-elasticsearch:${ALEPH_TAG:-latest}
     hostname: elasticsearch
     environment:
       - discovery.type=single-node
@@ -35,7 +35,7 @@ services:
         - "6379:6379"
 
   convert-document:
-    image: ${DOCKER_USER:-alephdata}/convert-document:c48bb70a4553809d3c6dcace37eceaa355e16ba7
+    image: alephdata/convert-document:c48bb70a4553809d3c6dcace37eceaa355e16ba7
     restart: on-failure
     tmpfs:
       - /tmp
@@ -45,7 +45,7 @@ services:
   ingest-file:
     build:
       context: ../services/ingest-file
-    image: ${DOCKER_USER:-alephdata}/ingest-file:${ALEPH_TAG:-latest}
+    image: malteos/ingest-file:${ALEPH_TAG:-latest}
     hostname: ingest
     tmpfs: /tmp
     volumes:
@@ -67,7 +67,7 @@ services:
   app:
     build:
       context: ..
-    image: ${DOCKER_USER:-alephdata}/aleph:${ALEPH_TAG:-latest}
+    image: malteos/aleph:${ALEPH_TAG:-latest}
     hostname: aleph
     #command: /bin/bash
     #    command: bash -c "
@@ -98,7 +98,7 @@ services:
   api:
     build:
       context: ..
-    image: ${DOCKER_USER:-alephdata}/aleph:${ALEPH_TAG:-latest}
+    image: malteos/aleph:${ALEPH_TAG:-latest}
     #    command: bash -c "
     #      pip3 install -e /host/Volumes/data/repo/qurator/followthemoney
     #      && aleph run -h 0.0.0.0 -p 5000 --with-threads --reload --debugger
@@ -126,7 +126,7 @@ services:
   ui:
     build:
       context: ../ui
-    image: ${DOCKER_USER:-alephdata}/aleph-ui:${ALEPH_TAG:-latest}
+    image: malteos/aleph-ui:${ALEPH_TAG:-latest}
     links:
       - api
     command: npm run start
@@ -150,7 +150,7 @@ services:
   cwm:
     build:
      context: ../services/qurator_cwm
-    # image: ${DOCKER_USER:-alephdata}/cwm:${ALEPH_TAG:-latest}
+    # image: malteos/cwm:${ALEPH_TAG:-latest}
     volumes:
     - archive-data:/data
     - "../services/qurator_cwm/qurator_cwm:/qurator_cwm/qurator_cwm"

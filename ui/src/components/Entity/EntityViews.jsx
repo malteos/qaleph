@@ -182,7 +182,8 @@ class EntityViews extends React.Component {
             panel={<EntityMappingMode document={entity} />}
           />
         )}
-        <Tab
+        {entity.schema.isA('PlainText') && (
+            <Tab
             id="annotation"
             title={(
                 <>
@@ -191,7 +192,8 @@ class EntityViews extends React.Component {
                 </>
             )}
             panel={<EntityAnnotationsViewMode entity={entity} />}
-        />
+          />
+        )}
       </Tabs>
     );
   }

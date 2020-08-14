@@ -1,7 +1,7 @@
 # Dependencies maintained by OCCRP
 banal==1.0.1
 urlnormalizer==1.2.5
-https://github.com/malteos/followthemoney/archive/qurator.zip#egg=followthemoney
+https://github.com/malteos/followthemoney/archive/aebf00589f0b7beae61d5ccf33427ed3fef114f4.zip#egg=followthemoney
 followthemoney-store[postgresql]==2.2.1
 fingerprints==1.0.1
 servicelayer[google,amazon]==1.13.5

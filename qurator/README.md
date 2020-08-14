@@ -1,6 +1,7 @@
 # Qurator Aleph (QAleph)
 
 - Do not mount node_modules, instead build image with dependencies!
+- Docker images are in an extra repo (malteos)
 
 ### Getting started
 
@@ -88,6 +89,10 @@ ui/ts.config:
    
 ui/src/reducers/index.js
     Add reducers
+    
+ui/src/screens/SearchScreen/SearchScreen.jsx,
+ui/src/util/getFacetConfig.js
+    Add search facets
      
 ```
 
@@ -135,3 +140,14 @@ Install custom ontology from Github repo: https://github.com/malteos/followthemo
 ```
 followthemoney.exc.InvalidData: Unknown property (<Schema('PlainText')>): labeledPositionAnnotations
 ```
+
+
+## Annotations
+
+Annotations can be created on a collection level.
+For each annotation task a new collection must be created.
+Label classes can be defined by adding the following text anywhere to the collection summary:
+
+```NER-tags: CLASS1,CLASS2,CLASS3```
+
+CLASS1 etc. can be replaced with the actual class names.

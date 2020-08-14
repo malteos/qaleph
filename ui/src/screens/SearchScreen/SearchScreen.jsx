@@ -51,6 +51,8 @@ const messages = defineMessages({
 
 const facetKeys = [
   'collection_id', 'schema', 'countries', 'languages', 'emails', 'phones', 'names', 'addresses', 'mimetypes',
+  // custom facets
+  'properties.annotatedTopics', 'properties.annotatedUserStatus',
 ];
 
 export class SearchScreen extends React.Component {

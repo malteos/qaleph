@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Divider, Icon, Tag, Tooltip } from "@blueprintjs/core";
+import { Button, Icon, Tag, Tooltip } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import PropTypes from "prop-types";
 // import { useHotkeys } from "react-hotkeys-hook";
@@ -9,8 +9,9 @@ import TokenAnnotator from "./annotator/TokenAnnotator";
 
 const AnnotationForm = ({
   pages,
-  onAnnotationsChange, handleAccept, handleReject, handleUndo, handleSkip,
+  onAnnotationsChange, handleAccept, handleReject, handleUndo, handleSkip, handleBrowse,
   labelClasses,
+  status,
 }) => {
   const [activeLabelClass, setActiveLabelClass] = useState(labelClasses.length > 0 ? labelClasses[0]: 'No labels available');
 
@@ -195,30 +196,31 @@ const AnnotationForm = ({
     if (!isNaN(labelClassIndex) && labelClassIndex > 0 && labelClassIndex <= labelClasses.length) {
       const newActiveLabelClass = labelClasses[labelClassIndex - 1];
 
-      // If old label class is equal to new label class, no need to change anything
-      if (labelClass === newActiveLabelClass) return;
-
-      // Update active label class
-      setActiveLabelClass(newActiveLabelClass);
-
       // Is any annotation selected that we need to change?
       if (page >= 0 && start >= 0 && end >= 0) {
         const changedPages = [...inputPages];
 
         for (let i = 0; i < changedPages[page].annotations.length; i += 1) {
           if (
-            start === changedPages[page].annotations[i].start &&
-            end === changedPages[page].annotations[i].end
+              start === changedPages[page].annotations[i].start &&
+              end === changedPages[page].annotations[i].end
           ) {
             // Change label class
             changedPages[page].annotations[i].label = newActiveLabelClass;
             break;
           }
         }
+
         // Send annotation change
         console.log("Send annotation change ");
         onAnnotationsChange(page, changedPages[page].annotations);
       }
+
+      // If old label class is equal to new label class, no need to change anything
+      // if (labelClass === newActiveLabelClass) return;
+
+      // Update active label class
+      setActiveLabelClass(newActiveLabelClass);
     }
   };
 
@@ -265,15 +267,16 @@ const AnnotationForm = ({
   console.log("Selected: ", [selectedPage, selectedStart, selectedEnd]);
 
   return (
-    <div>
+    <div className="annotation-wrapper">
       <div className="annotation-header">
         <div className="annotation-actions">
-            <Button icon="tick" intent="success" text="Accept (a)" onClick={(e) => handleAccept(e)} />
-            <Button icon="cross" intent="danger" text="Reject (x)" onClick={(e) => handleReject(e)} />
-            <Button icon="disable" text="Ignore (space)"  onClick={(e) => handleSkip(e)} />
+            <Button icon="tick" intent="success" active={status === 'accepted'} text="Accept (a)" onClick={(e) => handleAccept(e)} />
+            <Button icon="cross" intent="danger" active={status === 'rejected'} text="Reject (x)" onClick={(e) => handleReject(e)} />
+            <Button icon="disable" text="Ignore (space)"  active={status === 'skipped'} onClick={(e) => handleSkip(e)} />
             <Button icon="undo" text="Undo (backspace/del)" onClick={(e) => handleUndo(e)} />
+          <Button icon="undo" text="Browse collection" onClick={(e) => handleBrowse(e)} />
+
         </div>
-        <Divider vertical="true" />
         <div className="annotation-label-classes">
           {labelClasses.map((labelClass, index) => (
               <Tooltip
@@ -343,7 +346,6 @@ const AnnotationForm = ({
             </Tooltip>
           </div>
         )}
-        <Divider vertical="true" />
       </div>
 
       <div className="annotation-body">
@@ -415,7 +417,9 @@ AnnotationForm.propTypes = {
   handleReject: PropTypes.func.isRequired,
   handleSkip: PropTypes.func.isRequired,
   handleUndo: PropTypes.func.isRequired,
+  handleBrowse: PropTypes.func.isRequired,
   labelClasses: PropTypes.arrayOf(PropTypes.string).isRequired,
+  status: PropTypes.string,
 };
 
 export default AnnotationForm;

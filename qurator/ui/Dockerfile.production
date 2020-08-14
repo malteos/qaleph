@@ -1,4 +1,4 @@
-ARG from=alephdata/aleph-ui:latest
+ARG from=malteos/aleph-ui:latest
 
 FROM $from AS builder
 RUN npm run build

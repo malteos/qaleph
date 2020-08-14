@@ -1,15 +1,18 @@
 import json
 import logging
+import re
 from datetime import datetime
 
 import spacy
 from flask import Blueprint, request
 from followthemoney import model
+from followthemoney.proxy import EntityProxy
 from followthemoney.types import registry
 
-from aleph import settings
+from aleph import settings, index
 from aleph.core import db
-from aleph.index.entities import iter_entities
+from aleph.index.entities import iter_entities, index_entity, index_proxy
+from aleph.model import Collection
 from aleph.model.annotated_entity import AnnotatedEntity
 from aleph.views.util import get_index_entity
 from aleph.views.util import require
@@ -80,6 +83,7 @@ def view(entity_id):
     # Load entity
     entity = get_index_entity(entity_id, request.authz.READ)  #TODO includes
     proxy = model.get_proxy(entity, cleaned=False)
+    status = None
 
     # Fetch existing annotations (if user is logged in)
     ae = AnnotatedEntity.by_entity_and_author(entity_id, request.authz.id) if request.authz.id else None
@@ -87,6 +91,7 @@ def view(entity_id):
     if ae:
         # User-generated annotations exist
         annotations = ae.annotations  # per page
+        status = ae.status_type
 
         log.info(f'User annotations from DB: {annotations}')
     else:
@@ -137,12 +142,24 @@ def view(entity_id):
         for page_idx, page_tokens in enumerate(tokens)
     ]
 
+    # Get classes from collection summary
+    collection_id = entity.get("collection_id")
+    collection = Collection.by_id(collection_id)
+    label_classes = ['ORG', 'PERSON', 'LOCATION', 'MISC']  # default
+    if collection:
+        match = re.search(r'^NER-tags:(.*)$', collection.summary, re.MULTILINE)
+
+        if match:
+            label_classes = [lc.strip() for lc in match.group(1).strip().split(',')]
+
     return dict(
         status='OK',
         data=dict(
             #TODO label classes from collection?
-            labelClasses=['ORG', 'PERSON', 'LOCATION', 'MISC'],
+            labelClasses=label_classes,
+            status=status,
             entityId=entity_id,
+            collectionId=collection_id,
             pages=pages,
             )
         )
@@ -192,6 +209,7 @@ def update(entity_id):
     entity = get_index_entity(entity_id, request.authz.READ)  #TODO includes
 
     collection_id = entity.get("collection_id")
+    collection = Collection.by_id(collection_id)
     schemata = []
 
     # Get entities from same collection
@@ -219,16 +237,25 @@ def update(entity_id):
         db.session.add(annotated_entity)
 
     # Set values
+    status = post_data["status"] if post_data["status"] in annotated_entity.STATUS_TYPES else annotated_entity.SKIPPED
+
     annotated_entity.annotations = post_data["annotations"]
-    annotated_entity.status_type = post_data["status"] if post_data["status"] in annotated_entity.STATUS_TYPES else annotated_entity.SKIPPED
+    annotated_entity.status_type = status
     annotated_entity.updated_at = datetime.utcnow()
 
     db.session.flush()
     db.session.commit()
 
-    log.error('Annotated entity: %s' % annotated_entity)
+    # Save in ES
+    # Remove special keys for updating
+    for k in ['_index']:
+        del entity[k]
 
-    #TODO save in ES?
+    # Set status
+    entity['properties']['annotatedUserStatus'] = [status]
+
+    log.info('Saving annotation status in ES: %s' % status)
+
+    index_proxy(collection, EntityProxy.from_dict(model, entity, cleaned=False), sync=True)
 
     return dict(status='ok', data=dict(entityId=entity_id, nextEntityId=next_entity_id, collectionId=collection_id))
-

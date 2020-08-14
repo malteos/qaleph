@@ -10,6 +10,7 @@ import { fetchEntityAnnotations, fetchUpdatedAnnotations
 import AnnotationForm from "qaleph/components/Annotations/AnnotationForm";
 import {showSuccessToast, showWarningToast} from "app/toast";
 import queryString from "query-string";
+import {SectionLoading} from "../../../components/common";
 
 
 export class EntityAnnotationsViewMode extends Component {
@@ -25,14 +26,20 @@ export class EntityAnnotationsViewMode extends Component {
         this.handleReject = this.handleReject.bind(this);
         this.handleUndo = this.handleUndo.bind(this);
         this.handleSkip = this.handleSkip.bind(this);
+        this.handleBrowse = this.handleBrowse.bind(this);
+
     }
 
     componentDidMount() {
         console.log('componentDidMount');
         // this.fetchIfNeeded();
         const { entity } = this.props;
-        this.props.fetchEntityAnnotations(entity.id);
 
+        try {
+            this.props.fetchEntityAnnotations(entity.id);
+        } catch (e) {
+            showWarningToast(e.message);
+        }
     }
 
     componentDidUpdate() {
@@ -54,7 +61,11 @@ export class EntityAnnotationsViewMode extends Component {
         console.log(entityAnnotations.entityId);
 
         if (entityAnnotations.shouldLoad) {
-            this.props.fetchEntityAnnotations(entity.id);
+            try {
+                this.props.fetchEntityAnnotations(entity.id);
+            } catch (e) {
+                showWarningToast(e.message);
+            }
         } else {
             console.log('No fetch needed');
         }
@@ -107,9 +118,15 @@ export class EntityAnnotationsViewMode extends Component {
             } else {
                 showSuccessToast('No remaining documents left');
 
+                const params = {
+                    [`filter:collection_id`]: response.data.collectionId,
+                    facet: 'properties.annotatedUserStatus',
+                };
+                const query = queryString.stringify(params);
+
                 history.push({
-                    pathname: `/datasets/${response.data.collectionId}`,
-                    hash: queryString.stringify({mode: 'documents'})
+                    pathname: '/search',
+                    search: query,
                 });
             }
         } catch (e) {
@@ -139,6 +156,22 @@ export class EntityAnnotationsViewMode extends Component {
         event.preventDefault();
     }
 
+    handleBrowse() {
+        // Navigate to remaining document collection
+        const { entity, history } = this.props;
+
+        const params = {
+            [`filter:collection_id`]: entity.collection.id,
+            facet: 'properties.annotatedUserStatus',
+        };
+        const query = queryString.stringify(params);
+
+        history.push({
+            pathname: '/search',
+            search: query,
+        });
+    }
+
 
     render() {
         const { entityAnnotations } = this.props;
@@ -146,24 +179,26 @@ export class EntityAnnotationsViewMode extends Component {
         console.log('render(): props  ', this.props);
         console.log('render(): entityAnnotations ', entityAnnotations);
 
+        if (entityAnnotations.isPending) {
+            return <SectionLoading />;
+        }
+
         return (
             <div className="DocumentViewMode">
-                <div className="outer">
-                    <div className="inner TextViewer">
-                        {entityAnnotations && entityAnnotations.pages && entityAnnotations.labelClasses && (
-                            <AnnotationForm
-                                pages={entityAnnotations.pages}
-                                labelClasses={entityAnnotations.labelClasses}
-                                onAnnotationsChange={this.onAnnotationsChange}
-                                handleAccept={this.handleAccept}
-                                handleReject={this.handleReject}
-                                handleUndo={this.handleUndo}
-                                handleSkip={this.handleSkip}
-                            />
-                        )}
-                        {/*<pre>{JSON.stringify(entityAnnotations)}</pre>*/}
-                    </div>
-                </div>
+                {entityAnnotations && entityAnnotations.pages && entityAnnotations.labelClasses && (
+                    <AnnotationForm
+                        pages={entityAnnotations.pages}
+                        labelClasses={entityAnnotations.labelClasses}
+                        status={entityAnnotations.status}
+                        onAnnotationsChange={this.onAnnotationsChange}
+                        handleAccept={this.handleAccept}
+                        handleReject={this.handleReject}
+                        handleUndo={this.handleUndo}
+                        handleSkip={this.handleSkip}
+                        handleBrowse={this.handleBrowse}
+                    />
+                )}
+                {/*<pre>{JSON.stringify(entityAnnotations)}</pre>*/}
             </div>
 
         );
