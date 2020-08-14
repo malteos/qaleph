@@ -80,9 +80,13 @@ jobs:
         make ALEPH_TAG=${GITHUB_SHA} services
         sleep 10
     - name: Run ingest tests
-      run: make ALEPH_TAG=${GITHUB_SHA} ingest-test
+      run: |
+        cd qurator
+        make ALEPH_TAG=${GITHUB_SHA} ingest-test
     - name: Run aleph tests
-      run: make ALEPH_TAG=${GITHUB_SHA} test
+      run: |
+        cd qurator
+        make ALEPH_TAG=${GITHUB_SHA} test
 #    - name: Push docker images for tags
 #      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
 #      run: |
