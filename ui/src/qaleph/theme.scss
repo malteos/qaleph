@@ -4,7 +4,86 @@
 ////@import "~@blueprintjs/core/lib/scss/variables";
 //@import "~@blueprintjs/icons/lib/scss/variables";
 //
-//$aleph-primary: #00f;
+$aleph-primary: #0000ff;
+$aleph-secondary: #000080;
+
+$aleph-navbar-background: $aleph-primary;
+$aleph-searchbar-background: $aleph-secondary;
+
+$pt-intent-primary: $aleph-primary;
+
+.Navbar {
+  &.bp3-navbar {
+    background-color: $aleph-navbar-background !important;
+  }
+}
+
+.ScopeSelect__scope-button {
+    background-color: $aleph-searchbar-background !important;
+}
+
+.bp3-button.bp3-intent-primary {
+  background-color: $aleph-primary !important;
+}
+
+.bp3-button.bp3-minimal {
+  background: none !important;
+}
+
+.QueryFilterTag.bp3-tag {
+  background-color: $aleph-primary !important;
+}
+
+.bp3-menu-item.bp3-intent-primary.bp3-active {
+  background-color: $aleph-primary !important;
+}
+
+.SearchFacet > .opener .bp3-tag {
+  background-color: $aleph-primary !important;
+}
+
+.bp3-tab[aria-selected="true"], .bp3-tab:not([aria-disabled="true"]):hover {
+  color: $aleph-primary !important;
+}
+
+.bp3-tab[aria-selected="true"] > .Count {
+  background-color: $aleph-primary !important;
+}
+
+.bp3-tab-indicator-wrapper .bp3-tab-indicator {
+  background-color: $aleph-primary !important;
+}
+
+table tr.active,
+table tr.active td {
+  background-color: $aleph-primary !important;
+}
+
+$aleph-link-color: $aleph-primary;
+$aleph-breadcrumbs-background: #EEE;
+
+$blue1: #000080;
+$blue2:  $aleph-primary;
+$table-header-color: $aleph-primary;
+$button-color-hover: #000080;
+$aleph-sidebar-background: #EEE;
+
+.HomeScreen {
+  &__section {
+    text-align: center;
+
+    &.title-section {
+      background-image: url("assets/splash2.jpg");
+    }
+  }
+}
+
+.CasesIndexScreen {
+  .explainer {
+    background-image: url("assets/splash2.jpg");
+  }
+}
+
 //
 ////////////
 //
@@ -117,7 +196,6 @@
 //$sepia4: #b07b46;
 //$sepia5: #c99765;
 //
-//$pt-intent-primary: $aleph-primary;
 //$pt-intent-success: $green3;
 //$pt-intent-warning: $orange3;
 //$pt-intent-danger: $red3;
@@ -274,8 +352,7 @@
 //$aleph-screen-lg-max-width: 1200px;
 //
 //
-//$aleph-navbar-background: $aleph-primary;
-//$aleph-searchbar-background: darken($aleph-navbar-background, 25%);
+
 //$aleph-breadcrumbs-background: $light-gray4;
 //$aleph-page-background: white;
 //$aleph-link-color: $aleph-primary;
@@ -331,3 +408,4 @@
 //.bp3-button.bp3-intent-primary {
 //  background-color: #000080 !important;
 //}
+

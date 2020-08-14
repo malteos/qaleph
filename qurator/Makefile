@@ -40,6 +40,10 @@ upgrade: build
 	sleep 10
 	$(APPDOCKER) aleph upgrade
 
+sweb:
+	$(COMPOSE) up -d --remove-orphans postgres elasticsearch ingest-file
+	$(COMPOSE) up api ui
+
 web: services
 	$(COMPOSE) up api ui
 
