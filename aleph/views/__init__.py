@@ -19,6 +19,7 @@ from aleph.views.mappings_api import blueprint as mappings_api
 from aleph.views.entitysets_api import blueprint as entitysets_api
 from aleph.qaleph.views.corpus_analysis_api import blueprint as corpus_analysis_api
 from aleph.qaleph.views.entity_annotations_api import blueprint as entity_annotations_api
+from aleph.qaleph.views.qurator_proxy_api import blueprint as qurator_proxy_api
 
 
 def mount_app_blueprints(app):
@@ -44,3 +45,4 @@ def mount_app_blueprints(app):
     # Custom endpoints
     app.register_blueprint(corpus_analysis_api)
     app.register_blueprint(entity_annotations_api)
+    app.register_blueprint(qurator_proxy_api)
