@@ -35,6 +35,7 @@ $pt-intent-primary: $aleph-primary;
 
 .SearchFacet > .opener .bp3-tag {
   background-color: $aleph-primary !important;
+  color: #fff;
 }
 
 .bp3-tab[aria-selected="true"], .bp3-tab:not([aria-disabled="true"]):hover {
@@ -70,6 +71,18 @@ $aleph-sidebar-background: #EEE;
     &.title-section {
       background: #ebf1f5;
     }
+  }
+
+  &__text-container {
+    color: #000 !important;
+  }
+
+  .Statistics__headline {
+    color: #000 !important;
+  }
+
+  .Statistics__list-item a {
+    color: #000 !important;
   }
 }
 

@@ -14,14 +14,14 @@ class AppItem extends PureComponent {
       const message = (
         <FormattedMessage
           id="footer.aleph"
-          defaultMessage="Aleph {version}"
+          defaultMessage="Qurator/Aleph {version}"
           values={{
               version: app.version,
           }}
         />
       );
       return (
-        <MenuItem className="bp3-text-disabled" icon="code" text={message} href="https://docs.alephdata.org" />
+        <MenuItem className="bp3-text-disabled" icon="code" text={message} href="https://qurator.ai/" />
       );
     }
   }

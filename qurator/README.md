@@ -94,6 +94,8 @@ ui/src/screens/SearchScreen/SearchScreen.jsx,
 ui/src/util/getFacetConfig.js
     Add search facets
      
+ui/src/components/common/AppItem
+    Aleph version info
 ```
 
 
@@ -151,3 +153,12 @@ Label classes can be defined by adding the following text anywhere to the collec
 ```NER-tags: CLASS1,CLASS2,CLASS3```
 
 CLASS1 etc. can be replaced with the actual class names.
+
+## Pages
+
+```bash
+# maybe mount this directory to persistent cloud storage
+export ALEPH_PAGES_PATH=/aleph/qurator/pages
+```
+
+Aleph info: `ui/src/components/common/AppItem`
