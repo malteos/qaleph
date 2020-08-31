@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Icon, Tag, Tooltip } from "@blueprintjs/core";
+import { Button, Icon, Tag, Tooltip, Position } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import PropTypes from "prop-types";
 // import { useHotkeys } from "react-hotkeys-hook";
@@ -270,10 +270,18 @@ const AnnotationForm = ({
     <div className="annotation-wrapper">
       <div className="annotation-header">
         <div className="annotation-actions">
-            <Button icon="tick" intent="success" active={status === 'accepted'} text="Accept (a)" onClick={(e) => handleAccept(e)} />
-            <Button icon="cross" intent="danger" active={status === 'rejected'} text="Reject (x)" onClick={(e) => handleReject(e)} />
-            <Button icon="disable" text="Ignore (space)"  active={status === 'skipped'} onClick={(e) => handleSkip(e)} />
-            <Button icon="undo" text="Undo (backspace/del)" onClick={(e) => handleUndo(e)} />
+          <Tooltip content="Shortcut: a" position={Position.BOTTOM}>
+            <Button icon="tick" intent="success" active={status === 'accepted'} text="Accept" onClick={(e) => handleAccept(e)} />
+          </Tooltip>
+          <Tooltip content="Shortcut: x" position={Position.BOTTOM}>
+            <Button icon="cross" intent="danger" active={status === 'rejected'} text="Reject" onClick={(e) => handleReject(e)} />
+          </Tooltip>
+          <Tooltip content="Shortcut: space" position={Position.BOTTOM}>
+            <Button icon="disable" text="Ignore"  active={status === 'skipped'} onClick={(e) => handleSkip(e)} />
+          </Tooltip>
+          <Tooltip content="Shortcut: backspace/del" position={Position.BOTTOM}>
+            <Button icon="undo" text="Undo" onClick={(e) => handleUndo(e)} />
+          </Tooltip>
           <Button icon="undo" text="Browse collection" onClick={(e) => handleBrowse(e)} />
 
         </div>

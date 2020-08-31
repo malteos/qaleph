@@ -162,3 +162,5 @@ export ALEPH_PAGES_PATH=/aleph/qurator/pages
 ```
 
 Aleph info: `ui/src/components/common/AppItem`
+Translations
+- msgid "Aleph {version}"

@@ -23,6 +23,8 @@ import systemStatus from './systemStatus';
 import queryLogs from './queryLogs';
 import corpusAnalysis from 'qaleph/reducers/corpusAnalysis';
 import entityAnnotations from 'qaleph/reducers/entityAnnotations';
+import entitySummary from 'qaleph/reducers/entitySummary';
+import entityTranslation from 'qaleph/reducers/entityTranslation';
 
 
 const rootReducer = combineReducers({
@@ -49,6 +51,8 @@ const rootReducer = combineReducers({
   systemStatus,
   corpusAnalysis,
   entityAnnotations,
+  entityTranslation,
+  entitySummary
 });
 
 export default rootReducer;

@@ -10,10 +10,10 @@ import { fetchEntityAnnotations, fetchUpdatedAnnotations
 import AnnotationForm from "qaleph/components/Annotations/AnnotationForm";
 import {showSuccessToast, showWarningToast} from "app/toast";
 import queryString from "query-string";
-import {SectionLoading} from "../../../components/common";
+import {SectionLoading} from "components/common";
 
 
-export class EntityAnnotationsViewMode extends Component {
+export class AnnotationsViewMode extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -149,7 +149,7 @@ export class EntityAnnotationsViewMode extends Component {
     }
 
     handleUndo(event) {
-        const { entity, entityAnnotations } = this.props;
+        // const { entity, entityAnnotations } = this.props;
 
         alert('Undo');
 
@@ -213,4 +213,4 @@ export default compose(
     withRouter,
     injectIntl,
     connect(mapStateToProps, { fetchEntityAnnotations, fetchUpdatedAnnotations }),
-)(EntityAnnotationsViewMode);
+)(AnnotationsViewMode);

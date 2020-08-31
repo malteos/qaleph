@@ -31,18 +31,40 @@ def view(api_path):
     api_url = QURATOR_API_URL + api_path
     api_kwargs = {}
 
+    log.info(f'Forward API request to (method: {request.method}): {api_url}')
+
     if request.args:
         # Forward data
-        api_kwargs['json'] = request.args
+        api_kwargs['data'] = request.args
+        log.info('Data: %s' % request.args)
 
-    log.info(f'Forward API request to: {api_url}')
+    if request.is_json:
+        log.info('JSON: %s' % request.json)
+        api_kwargs['json'] = request.json
+
+    # headers = dict(request.headers)
+    #
+    # headers['Accept'] = 'application/json'
+    #
+    # for k, v in list(headers.items()):
+    #     if k == 'Host' or k == 'Cookie':
+    #         del headers[k]
+    #         continue
+    #
+    #     log.info(f' - header: {k}={v}')
 
     res = requests.request(
         request.method,
         api_url,
         auth=HTTPBasicAuth(QURATOR_API_USER, QURATOR_API_PASSWORD),
+        headers={
+            'Content-Type': 'application/json'
+        },
         **api_kwargs
     )
+
+    if res.status_code != 200:
+        log.error(f'API response has error code: {res.status_code}')
 
     # Return API response as JSON if possible
     try:
@@ -50,4 +72,5 @@ def view(api_path):
         return jsonify(api_res)
 
     except JSONDecodeError:
+        log.warning(f'API response is not JSON encoded.')
         return res.content

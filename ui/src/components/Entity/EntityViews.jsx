@@ -18,7 +18,9 @@ import EntitySimilarMode from 'components/Entity/EntitySimilarMode';
 import EntityInfoMode from 'components/Entity/EntityInfoMode';
 import EntityMappingMode from 'components/Entity/EntityMappingMode';
 import DocumentViewMode from 'components/Document/DocumentViewMode';
-import EntityAnnotationsViewMode from "qaleph/components/Entity/EntityAnnotationsViewMode";
+import AnnotationsViewMode from "qaleph/components/Annotations/AnnotationsViewMode";
+import SummaryViewMode from "qaleph/components/Summary/SummaryViewMode";
+import TranslationViewMode from "qaleph/components/Translation/TranslationViewMode";
 
 
 class EntityViews extends React.Component {
@@ -191,8 +193,32 @@ class EntityViews extends React.Component {
                   Annotations
                 </>
             )}
-            panel={<EntityAnnotationsViewMode entity={entity} />}
+            panel={<AnnotationsViewMode entity={entity} />}
           />
+        )}
+        {entity.schema.isA('PlainText') && (
+            <Tab
+                id="summary"
+                title={(
+                    <>
+                      <Icon icon="filter-list" className="left-icon" />
+                      Summary
+                    </>
+                )}
+                panel={<SummaryViewMode entity={entity} />}
+            />
+        )}
+        {entity.schema.isA('PlainText') && (
+            <Tab
+                id="translation"
+                title={(
+                    <>
+                      <Icon icon="translate" className="left-icon" />
+                      Translation
+                    </>
+                )}
+                panel={<TranslationViewMode entity={entity} />}
+            />
         )}
       </Tabs>
     );

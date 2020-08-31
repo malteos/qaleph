@@ -146,7 +146,7 @@ def view(entity_id):
     collection_id = entity.get("collection_id")
     collection = Collection.by_id(collection_id)
     label_classes = ['ORG', 'PERSON', 'LOCATION', 'MISC']  # default
-    if collection:
+    if collection and collection.summary:
         match = re.search(r'^NER-tags:(.*)$', collection.summary, re.MULTILINE)
 
         if match:
