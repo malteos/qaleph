@@ -35,7 +35,7 @@ services:
         - "6379:6379"
 
   convert-document:
-    image: alephdata/convert-document:c48bb70a4553809d3c6dcace37eceaa355e16ba7
+    image: alephdata/convert-document:58d74ecccb4ce475668a7d72c3b4432044dcd14d
     restart: on-failure
     tmpfs:
       - /tmp
@@ -56,7 +56,7 @@ services:
       - "../services/ingest-file/data:/ingestors/data"
       - "../services/ingest-file/requirements.txt:/ingestors/requirements.txt"
       - "/:/host"
-    links:
+    depends_on:
       - postgres
       - redis
       - convert-document
@@ -76,7 +76,7 @@ services:
     #      && /bin/bash
     #      "
     command: bash -c "/bin/bash"
-    links:
+    depends_on:
       - postgres
       - elasticsearch
       - redis
@@ -109,7 +109,7 @@ services:
     ports:
       - "127.0.0.1:5000:5000"
     restart: on-failure
-    links:
+    depends_on:
       - postgres
       - elasticsearch
       - redis
@@ -130,7 +130,7 @@ services:
     build:
       context: ../ui
     image: malteos/aleph-ui:${ALEPH_TAG:-latest}
-    links:
+    depends_on:
       - api
     command: npm run start
     ports:
