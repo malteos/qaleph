@@ -45,7 +45,8 @@ services:
   ingest-file:
     build:
       context: ../services/ingest-file
-    image: malteos/ingest-file:${ALEPH_TAG:-latest}
+#    image: malteos/ingest-file:${ALEPH_TAG:-latest}
+    image: alephdata/ingest-file:${ALEPH_TAG:-latest}
     hostname: ingest
     tmpfs: /tmp
     volumes:
