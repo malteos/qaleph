@@ -74,11 +74,15 @@ class ServiceWorker(Worker):
             if 'annotations' in api_res:
                 # entity.add('annotatedEntitiesPosition', self.get_annotations(api_res))
                 entity.add('annotatedEntitiesPosition', json.dumps(self.get_annotations(api_res)))
-                entity.add('annotatedTopics', 'foo')
 
                 writer.put(entity)
 
-                log.info(f'annotations saved for {entity}')
+                log.info(f'Annotations saved for {entity}')
+
+            if 'topics' in api_res:
+                entity.add('annotatedTopics', api_res['topics'])
+
+                log.info(f'Topics saved for {entity}')
 
         else:
             log.error(f'CWM returned error: {res.text}')

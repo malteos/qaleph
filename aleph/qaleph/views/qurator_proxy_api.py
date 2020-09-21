@@ -31,35 +31,48 @@ def view(api_path):
     api_url = QURATOR_API_URL + api_path
     api_kwargs = {}
 
-    log.info(f'Forward API request to (method: {request.method}): {api_url}')
+    if request.query_string:
+        log.info('QUERY string: %s' % request.query_string.decode('utf-8'))
+        api_url += '?%s' % request.query_string.decode('utf-8')
 
     if request.args:
         # Forward data
         api_kwargs['data'] = request.args
-        log.info('Data: %s' % request.args)
+        log.info('Data from Args: %s' % request.args)
+
+    if request.data:
+        # Forward data (override args)
+        api_kwargs['data'] = request.data
+        log.info('Data from raw data: %s' % request.data)
 
     if request.is_json:
         log.info('JSON: %s' % request.json)
         api_kwargs['json'] = request.json
 
-    # headers = dict(request.headers)
-    #
-    # headers['Accept'] = 'application/json'
-    #
-    # for k, v in list(headers.items()):
-    #     if k == 'Host' or k == 'Cookie':
-    #         del headers[k]
-    #         continue
-    #
-    #     log.info(f' - header: {k}={v}')
+    log.info(f'Forward API request to (method: {request.method}): {api_url}')
+
+    headers = {
+        # Default headers
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    }
+    headers.update(dict(request.headers))
+
+    for k, v in list(headers.items()):
+        if k == 'Host' or k == 'Cookie' or 'Accept=' in k:
+            del headers[k]
+            continue
+
+        log.info(f' - header: {k} = {v}')
 
     res = requests.request(
         request.method,
         api_url,
         auth=HTTPBasicAuth(QURATOR_API_USER, QURATOR_API_PASSWORD),
-        headers={
-            'Content-Type': 'application/json'
-        },
+        headers=headers,
+        # headers={
+        #     'Content-Type': 'application/json'
+        # },
         **api_kwargs
     )
 
