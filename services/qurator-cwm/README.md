@@ -6,6 +6,6 @@ See https://gitlab.com/qurator-platform/dfki/curationworkflowmanager
 
 ```bash
 
-docker run -it qurator_cwm bash
+docker run -it qurator-cwm bash
 
 ```

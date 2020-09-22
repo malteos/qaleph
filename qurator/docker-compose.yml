@@ -105,8 +105,8 @@ services:
 
   cwm:
     build:
-     context: ../services/qurator_cwm
-    image: malteos/cwm:${ALEPH_TAG:-latest}
+     context: ../services/qurator-cwm
+    image: malteos/qurator-cwm:${ALEPH_TAG:-latest}
     volumes:
     - archive-data:/data
     restart: on-failure

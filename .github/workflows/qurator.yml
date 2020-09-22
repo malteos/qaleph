@@ -45,6 +45,18 @@ jobs:
       run: |
         docker login -u ${{ secrets.docker_user }} -p ${{ secrets.docker_password }}
         docker push malteos/ingest-file:${GITHUB_SHA}
+  docker-qurator-cwm:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build docker image
+      run: |
+        docker build -t malteos/qurator-cwm:${GITHUB_SHA} services/qurator-cwm
+        docker tag malteos/qurator-cwm:${GITHUB_SHA} malteos/qurator-cwm:latest
+    - name: Push docker image (hash)
+      run: |
+        docker login -u ${{ secrets.docker_user }} -p ${{ secrets.docker_password }}
+        docker push malteos/qurator-cwm:${GITHUB_SHA}
   docker-aleph:
     runs-on: ubuntu-latest
     steps:
@@ -103,7 +115,7 @@ jobs:
       run: |
         docker login -u ${{ secrets.docker_user }} -p ${{ secrets.docker_password }}
         docker pull malteos/aleph-ui-production:${GITHUB_SHA}
-        for IMAGE in aleph aleph-ui-production aleph-elasticsearch ingest-file; do
+        for IMAGE in aleph aleph-ui-production aleph-elasticsearch ingest-file qurator-cwm; do
           docker tag malteos/${IMAGE}:${GITHUB_SHA} malteos/${IMAGE}:latest;
           docker push malteos/${IMAGE}:latest;
         done;

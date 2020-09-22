@@ -152,11 +152,11 @@ services:
       - ../aleph.env
   cwm:
     build:
-     context: ../services/qurator_cwm
+     context: ../services/qurator-cwm
     # image: malteos/cwm:${ALEPH_TAG:-latest}
     volumes:
     - archive-data:/data
-    - "../services/qurator_cwm/qurator_cwm:/qurator_cwm/qurator_cwm"
+    - "../services/qurator-cwm/qurator_cwm:/qurator-cwm/qurator_cwm"
     - "/:/host"
     restart: on-failure
     env_file:

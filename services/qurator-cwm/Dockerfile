@@ -17,17 +17,17 @@ RUN groupadd -g 1000 -r app \
 
 RUN pip3 install --no-cache-dir -q -U pip setuptools six wheel nose coverage
 
-WORKDIR /qurator_cwm
+WORKDIR /qurator-cwm
 
-RUN mkdir -p /qurator_cwm
+RUN mkdir -p /qurator-cwm
 
-COPY requirements.txt /qurator_cwm
-RUN pip3 install --no-cache-dir -r /qurator_cwm/requirements.txt
+COPY requirements.txt /qurator-cwm
+RUN pip3 install --no-cache-dir -r /qurator-cwm/requirements.txt
 
-COPY . /qurator_cwm
-RUN pip3 install --no-cache-dir -e /qurator_cwm
+COPY . /qurator-cwm
+RUN pip3 install --no-cache-dir -e /qurator-cwm
 
-RUN chown -R app:app /qurator_cwm
+RUN chown -R app:app /qurator-cwm
 
 ENV FTM_STORE_URI=postgresql://aleph:aleph@postgres/aleph \
     REDIS_URL=redis://redis:6379/0
