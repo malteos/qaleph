@@ -12,6 +12,7 @@ const AnnotationForm = ({
   onAnnotationsChange, handleAccept, handleReject, handleUndo, handleSkip, handleBrowse,
   labelClasses,
   status,
+  canAnnotate,
 }) => {
   const [activeLabelClass, setActiveLabelClass] = useState(labelClasses.length > 0 ? labelClasses[0]: 'No labels available');
 
@@ -271,18 +272,47 @@ const AnnotationForm = ({
       <div className="annotation-header">
         <div className="annotation-actions">
           <Tooltip content="Shortcut: a" position={Position.BOTTOM}>
-            <Button icon="tick" intent="success" active={status === 'accepted'} text="Accept" onClick={(e) => handleAccept(e)} />
+            <Button
+                icon="tick"
+                intent="success"
+                active={status === 'accepted'}
+                text="Accept"
+                onClick={(e) => handleAccept(e)}
+                disabled={!canAnnotate}
+            />
           </Tooltip>
           <Tooltip content="Shortcut: x" position={Position.BOTTOM}>
-            <Button icon="cross" intent="danger" active={status === 'rejected'} text="Reject" onClick={(e) => handleReject(e)} />
+            <Button
+                icon="cross"
+                intent="danger"
+                active={status === 'rejected'}
+                text="Reject"
+                onClick={(e) => handleReject(e)}
+                disabled={!canAnnotate}
+            />
           </Tooltip>
           <Tooltip content="Shortcut: space" position={Position.BOTTOM}>
-            <Button icon="disable" text="Ignore"  active={status === 'skipped'} onClick={(e) => handleSkip(e)} />
+            <Button
+                icon="disable"
+                text="Ignore"
+                active={status === 'skipped'}
+                onClick={(e) => handleSkip(e)}
+                disabled={!canAnnotate}
+            />
           </Tooltip>
           <Tooltip content="Shortcut: backspace/del" position={Position.BOTTOM}>
-            <Button icon="undo" text="Undo" onClick={(e) => handleUndo(e)} />
+            <Button
+                icon="undo"
+                text="Undo"
+                onClick={(e) => handleUndo(e)}
+                disabled={!canAnnotate}
+            />
           </Tooltip>
-          <Button icon="undo" text="Browse collection" onClick={(e) => handleBrowse(e)} />
+          <Button
+              icon="undo"
+              text="Browse collection"
+              onClick={(e) => handleBrowse(e)}
+          />
 
         </div>
         <div className="annotation-label-classes">
@@ -307,6 +337,7 @@ const AnnotationForm = ({
                             selectedEnd
                         )
                     }
+                    disabled={!canAnnotate}
                 >
                   {labelClass}
                   <Tag>{index + 1}</Tag>
@@ -330,6 +361,7 @@ const AnnotationForm = ({
                     selectedEnd
                   )
                 }
+                disabled={!canAnnotate}
               >
                 <Icon icon={IconNames.ARROW_LEFT} />
               </Button>
@@ -348,6 +380,7 @@ const AnnotationForm = ({
                     selectedEnd
                   )
                 }
+                disabled={!canAnnotate}
               >
                 <Icon icon={IconNames.ARROW_RIGHT} />
               </Button>
@@ -428,6 +461,7 @@ AnnotationForm.propTypes = {
   handleBrowse: PropTypes.func.isRequired,
   labelClasses: PropTypes.arrayOf(PropTypes.string).isRequired,
   status: PropTypes.string,
+  canAnnotate: PropTypes.bool,
 };
 
 export default AnnotationForm;

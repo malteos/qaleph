@@ -11,6 +11,7 @@ import AnnotationForm from "qaleph/components/Annotations/AnnotationForm";
 import {showSuccessToast, showWarningToast} from "app/toast";
 import queryString from "query-string";
 import {SectionLoading} from "components/common";
+import { selectSession } from 'selectors';
 
 
 export class AnnotationsViewMode extends Component {
@@ -174,7 +175,9 @@ export class AnnotationsViewMode extends Component {
 
 
     render() {
-        const { entityAnnotations } = this.props;
+        const { entityAnnotations, session } = this.props;
+
+        const canAnnotate = session?.loggedIn;
 
         console.log('render(): props  ', this.props);
         console.log('render(): entityAnnotations ', entityAnnotations);
@@ -196,6 +199,7 @@ export class AnnotationsViewMode extends Component {
                         handleUndo={this.handleUndo}
                         handleSkip={this.handleSkip}
                         handleBrowse={this.handleBrowse}
+                        canAnnotate={canAnnotate}
                     />
                 )}
                 {/*<pre>{JSON.stringify(entityAnnotations)}</pre>*/}
@@ -207,6 +211,7 @@ export class AnnotationsViewMode extends Component {
 
 const mapStateToProps = state => ({
     entityAnnotations: state.entityAnnotations,
+    session: selectSession(state),
 });
 
 export default compose(

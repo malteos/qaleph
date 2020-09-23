@@ -13,7 +13,7 @@ OP_CWM = "cwm"
 
 CWM_USER = os.environ.get("CWM_USER", "qurator")
 CWM_PASSWORD = os.environ.get("CWM_PASSWORD", "dd17f230-a879-48cf-9220-55b4fcd4b941")
-CWM_WORKFLOW_ID = os.environ.get("CWM_WORKFLOW_ID", "QuratorWF1_102")
+CWM_WORKFLOW_ID = os.environ.get("CWM_WORKFLOW_ID", "QuratorWF2_104")
 
 
 class ServiceWorker(Worker):
