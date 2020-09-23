@@ -89,7 +89,7 @@ jobs:
       run: |
         echo "${GITHUB_REF}"
         cd qurator
-        ALEPH_TAG=${GITHUB_SHA} docker-compose pull --quiet --parallel elasticsearch convert-document ingest-file worker cwm
+        ALEPH_TAG=${GITHUB_SHA} docker-compose pull --quiet --parallel elasticsearch convert-document ingest-file worker qurator-cwm
         make ALEPH_TAG=${GITHUB_SHA} services
         sleep 10
     - name: Run ingest tests
