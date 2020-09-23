@@ -150,10 +150,11 @@ services:
       CI: 'true'
     env_file:
       - ../aleph.env
-  cwm:
+
+  qurator-cwm:
     build:
      context: ../services/qurator-cwm
-    # image: malteos/cwm:${ALEPH_TAG:-latest}
+    image: malteos/qurator-cwm:${ALEPH_TAG:-latest}
     volumes:
     - archive-data:/data
     - "../services/qurator-cwm/qurator_cwm:/qurator-cwm/qurator_cwm"

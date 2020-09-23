@@ -103,7 +103,7 @@ services:
     ports:
     - "8080:8080"
 
-  cwm:
+  qurator-cwm:
     build:
      context: ../services/qurator-cwm
     image: malteos/qurator-cwm:${ALEPH_TAG:-latest}

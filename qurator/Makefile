@@ -9,13 +9,13 @@ all: build upgrade web
 services:
 	$(COMPOSE) up -d --remove-orphans \
 		postgres elasticsearch ingest-file \
-		convert-document cwm
+		convert-document qurator-cwm
 
 ingest-shell: services    
 	$(INGESTDOCKER) /bin/bash
 
 ingest-tail:
-	$(COMPOSE) logs -f ingest-file cwm
+	$(COMPOSE) logs -f ingest-file qurator-cwm
 
 shell: services
 	$(APPDOCKER) /bin/bash
@@ -41,7 +41,7 @@ upgrade: build
 	$(APPDOCKER) aleph upgrade
 
 sweb:
-	$(COMPOSE) up -d --remove-orphans postgres elasticsearch ingest-file
+	$(COMPOSE) up -d --remove-orphans postgres elasticsearch ingest-file qurator-cwm
 	$(COMPOSE) up api ui
 
 web: services
