@@ -37,6 +37,9 @@ RUN python3 -m spacy download es_core_news_sm \
 RUN python3 -m spacy download pt_core_news_sm \
     && python3 -m spacy link pt_core_news_sm por
 
+# Override followthemoney
+RUN pip install --upgrade https://github.com/malteos/followthemoney/archive/qurator.zip#egg=followthemoney
+
 # Install aleph
 COPY . /aleph
 WORKDIR /aleph

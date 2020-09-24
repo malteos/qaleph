@@ -125,6 +125,9 @@ RUN python3 -m spacy download pt_core_news_sm \
     && python3 -m spacy link pt_core_news_sm por
 ENV INGESTORS_NER_MODELS=eng:deu:fra:spa:por
 
+# Override followthemoney
+RUN pip install --upgrade https://github.com/malteos/followthemoney/archive/qurator.zip#egg=followthemoney
+
 COPY . /ingestors
 WORKDIR /ingestors
 RUN pip3 install --no-cache-dir -e /ingestors
