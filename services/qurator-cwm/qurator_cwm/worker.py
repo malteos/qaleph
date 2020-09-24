@@ -15,6 +15,16 @@ CWM_USER = os.environ.get("CWM_USER", "qurator")
 CWM_PASSWORD = os.environ.get("CWM_PASSWORD", "dd17f230-a879-48cf-9220-55b4fcd4b941")
 CWM_WORKFLOW_ID = os.environ.get("CWM_WORKFLOW_ID", "QuratorWF2_104")
 
+####
+import logging
+import http.client
+http.client.HTTPConnection.debuglevel = 1
+logging.basicConfig()
+logging.getLogger().setLevel(logging.DEBUG)
+requests_log = logging.getLogger("requests.packages.urllib3")
+requests_log.setLevel(logging.DEBUG)
+requests_log.propagate = True
+####
 
 class ServiceWorker(Worker):
     """A long running task runner that uses Redis as a task queue"""
