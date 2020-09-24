@@ -267,6 +267,13 @@ def update(entity_id):
 
     log.info('Saving annotation status in ES: %s' % status)
 
-    index_proxy(collection, EntityProxy.from_dict(model, entity, cleaned=False), sync=True)
+    proxy = EntityProxy.from_dict(model, entity, cleaned=False)
+
+    log.info('Index entity: %s' % entity)
+    log.info('Index proxy: %s' % proxy)
+
+    index_proxy(collection, proxy, sync=True)
+
+    log.info('Index sent')
 
     return dict(status='ok', data=dict(entityId=entity_id, nextEntityId=next_entity_id, collectionId=collection_id))
