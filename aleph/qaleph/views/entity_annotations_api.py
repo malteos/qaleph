@@ -271,6 +271,8 @@ def update(entity_id):
 
     log.info('Index entity: %s' % entity)
     log.info('Index proxy: %s' % proxy)
+    log.info('Index proxy.to_dict: %s' % proxy.to_dict())
+    log.info('Index proxy.to_full_dict: %s' % proxy.to_full_dict())
 
     index_proxy(collection, proxy, sync=True)
 
