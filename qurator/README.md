@@ -6,6 +6,13 @@
 ### Getting started
 
 ```bash
+# clone our fork
+git clone https://github.com/malteos/qaleph.git aleph
+cd aleph
+
+# checkout our branch
+git checkout qaleph
+
 # Change to this directory
 cd qurator
 
